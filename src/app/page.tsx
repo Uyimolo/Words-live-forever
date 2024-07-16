@@ -1,13 +1,13 @@
 import Paragraph from '@/components/text/Paragraph';
-import { Quote } from '@/types/type';
-import { Metadata } from 'next';
+// import { Quote } from '@/types/type';
+// import { Metadata } from 'next';
 
-export const metadate: Metadata = {
-  title: 'Words Live Forever',
-  description: 'Bringing words to you ',
-  keywords: ['quotes'],
-  robots: 'index, follow',
-};
+// export const metadata: Metadata = {
+//   title: 'Words Live Forever',
+//   description: 'Bringing words to you ',
+//   keywords: ['quotes'],
+//   robots: 'index, follow',
+// };
 
 const fetchRandomQuotes = async () => {
   try {
@@ -24,7 +24,7 @@ const fetchRandomQuotes = async () => {
 export default async function Home() {
   const quote = await fetchRandomQuotes();
 
-  const { author, tags, content } = quote[0];
+  const { author, content } = quote[0];
 
   return (
     <div className='w-full grid min-h-full items-center'>
