@@ -7,8 +7,10 @@ import Footer from '@/components/layout-components/Footer';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Words live forever',
-  description: 'Find your favourite quotes here',
+  title: 'Words Live Forever',
+  description: 'Bringing words to you ',
+  keywords: ['quotes', 'inspirational quotes'],
+  robots: 'index, follow',
 };
 
 export default function RootLayout({
@@ -21,7 +23,7 @@ export default function RootLayout({
       <body
         className={`${inter.className} flex flex-col min-h-screen  bg-black`}>
         <Header />
-        <main className='flex-1 grid px-4 md:px-8 lg:px-12 '>
+        <main className='flex-1 grid py-6 px-4 md:px-8 lg:px-12 lg:py-13'>
           {children}
         </main>
         <Footer />
