@@ -46,7 +46,7 @@ const QuotesList = ({ quotesData }: { quotesData: QuotesData }) => {
   const handlePagination = (pageCount: number) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
-    // This is to delay the transition to prevent a flickering effect, i would add framer motion to intercept the skeleton and make it fade gently away later
+    // [TO MYSELF] This is to delay the transition to prevent a flickering effect, i would add framer motion to intercept the skeleton and make it fade gently away later
     const timeout = setTimeout(() => {
       setPage(pageCount);
       return clearTimeout(timeout);
@@ -72,7 +72,7 @@ const QuotesList = ({ quotesData }: { quotesData: QuotesData }) => {
             <Link
               href={`/quotes/${quote._id}`}
               key={quote._id}
-              className='border rounded min-w-full px-4 py-6 space-y-4 hover:bg-blue-600/20'>
+              className='border rounded min-w-full px-4 py-6 space-y-4 hover:border-blue-400 hover:shadow-2xl hover:shadow-blue-400/30'>
               <Paragraph className=''>{`${quote.content}`}</Paragraph>
 
               <Paragraph className='text-right text-gray-100'>

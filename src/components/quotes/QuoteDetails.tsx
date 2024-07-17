@@ -20,7 +20,7 @@ const QuoteDetails = ({ quote }: { quote: Quote }) => {
            <span className='text-5xl absolute -bottom-8'>{`"`}</span>
          </h1>
 
-         <Paragraph className='text-white'>See more posts by author</Paragraph>
+         <Paragraph className='text-white'>See more quotes by author</Paragraph>
        </div>
        {/* ))} */}
      </div>
