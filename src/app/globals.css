@@ -1,3 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* .lazy {
+    animation: lazy 1 infinite;
+}
+
+@keyframes lazy {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+} */

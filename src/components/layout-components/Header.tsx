@@ -17,7 +17,9 @@ export default function Header() {
   return (
     <header className='flex justify-between py-6 items-center px-4 md:px-8 lg:px-12'>
       <div className=''>
-        <p className='text-orange-400 text-3xl font-bold lg:text-5xl'>WLFeva</p>
+        <p className='text-orange-400 border-4 border-orange-400  text-xl font-bold rounded-md p-1 lg:text-2xl'>
+          W<span className='text-sm lg:text-base'>live</span>F
+        </p>
       </div>
 
       <nav className='flex  gap-2 lg:gap-4 '>
