@@ -22,7 +22,6 @@ const QuoteDetails = ({ quote }: { quote: Quote }) => {
 
          <Paragraph className='text-white'>See more quotes by author</Paragraph>
        </div>
-       {/* ))} */}
      </div>
    </div>
  );

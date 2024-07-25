@@ -1,14 +1,14 @@
 'use client';
 import { cn } from '@/utilities/cn';
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import React from 'react';
+import logo from "@/assets/logo.png"
 
 const navItems = [
   { label: 'Home', href: '/' },
   { label: 'Quotes', href: '/quotes' },
   { label: 'Authors', href: '/authors' },
-  // Add more navigation items as needed...
 ];
 
 export default function Header() {
@@ -16,13 +16,10 @@ export default function Header() {
 
   return (
     <header className='flex justify-between py-6 items-center px-4 md:px-8 lg:px-12'>
-      <Link href='/' className=''>
-        <p className='text-orange-400 border-4 border-orange-400  text-xl font-bold rounded-md p-1 lg:text-2xl'>
-          W<span className='text-sm lg:text-base'>live</span>F
-        </p>
-      </Link>
 
-      <nav className='flex  gap-2 lg:gap-4 '>
+      <Image src={logo} alt='Words live forever' width={60} height={60} className='w-16 lg:w-24' />
+
+      <nav className='flex  gap-4 lg:gap-4 '>
         {navItems.map((item, index) => (
           <Link
             key={index}

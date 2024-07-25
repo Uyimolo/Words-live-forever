@@ -1,6 +1,6 @@
 import QuoteDetails from '@/components/quotes/QuoteDetails';
 
-const SinglePost = async ({ params }: { params: { quoteId: string } }) => {
+const SingleQuote = async ({ params }: { params: { quoteId: string } }) => {
   const response = await fetch(`https://api.quotable.io/quotes/${params.quoteId}`);
 
   const quote = await response.json();
@@ -8,4 +8,4 @@ const SinglePost = async ({ params }: { params: { quoteId: string } }) => {
   return <QuoteDetails quote={quote} />;
 };
 
-export default SinglePost;
+export default SingleQuote;
