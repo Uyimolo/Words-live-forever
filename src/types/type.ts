@@ -21,3 +21,24 @@ export interface PaginationProps {
   page: number;
   loading: boolean;
 }
+
+export interface AuthorsData {
+  count: number;
+  totalCount: number;
+  page: number;
+  totalPages: number;
+  lastItemIndex: number;
+  results: Author[];
+}
+
+export interface Author {
+  _id: string;
+  name: string;
+  bio: string;
+  description: string;
+  link: string
+  quoteCount: number;
+  slug: string;
+  dateAdded: string;
+  dateModified: string;
+}
