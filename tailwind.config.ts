@@ -17,12 +17,20 @@ const config: Config = {
         lazy: 'lazy 6s infinite',
         lazySlow: 'lazy 2s ease-in-out infinite',
         lazyFast: 'lazy 0.5s ease-in-out infinite',
+        loading: 'loading 2s linear infinite',
       },
       keyframes: {
         lazy: {
           '0%': { opacity: '0.5' },
           '50%': { opacity: '1' },
           '100%': { opacity: '0.5' },
+        },
+        loading: {
+          '0%': { transform: 'rotate(0deg)' },
+          '25%': { transform: 'rotate(90deg)' },
+          '50%': { transform: 'rotate(180deg)' },
+          '75%': { transform: 'rotate(270deg)' },
+          '100%': { transform: 'rotate(360deg)' },
         },
       },
     },
