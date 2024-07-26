@@ -1,7 +1,7 @@
 'use client';
 import { Quote } from '@/types/type';
 import Paragraph from '../text/Paragraph';
-import SwiperCarousel from '../swipier/SwiperCarousel';
+// import SwiperCarousel from '../swipier/SwiperCarousel';
 import { useEffect, useState } from 'react';
 import QuoteLink from './QuoteLink';
 import LazyQuotes from './LazyQuotes';
@@ -65,7 +65,7 @@ const QuoteDetails = ({ quote }: { quote: Quote }) => {
 
         <div className='grid gap-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
           {relatedQuotes.length ? (
-            relatedQuotes.map((quote) => <QuoteLink quote={quote} />)
+            relatedQuotes.map((quote) => <QuoteLink key={quote._id} quote={quote} />)
           ) : (
             <LazyQuotes />
           )}
