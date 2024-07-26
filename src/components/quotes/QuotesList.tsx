@@ -1,10 +1,9 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import Paragraph from '../text/Paragraph';
 import { Quote, QuotesData } from '@/types/type';
 import Pagination from './Pagination';
 import LazyQuotes from './LazyQuotes';
-import Link from 'next/link';
+import QuoteLink from './QuoteLink';
 
 const QuotesList = ({ quotesData }: { quotesData: QuotesData }) => {
   // this will be for our page one.
@@ -12,11 +11,11 @@ const QuotesList = ({ quotesData }: { quotesData: QuotesData }) => {
 
   const [quotes, setQuotes] = useState(initialQuotes);
   const [page, setPage] = useState<number>(1);
-  const [filter, setFilter] = useState<string>('');
+  // const [filter, setFilter] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
 
   const fetchQuotes = async () => {
-    // to make sure users to refetch page one data and rely only on what is gotten from the server component
+    // to make sure users can't refetch page one data and rely only on what is gotten from the server component
     if (page > 1) {
       setLoading(true);
       try {
@@ -41,7 +40,7 @@ const QuotesList = ({ quotesData }: { quotesData: QuotesData }) => {
 
   useEffect(() => {
     fetchQuotes();
-  }, [page, filter]);
+  }, [page]);
 
   const handlePagination = (pageCount: number) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -56,29 +55,20 @@ const QuotesList = ({ quotesData }: { quotesData: QuotesData }) => {
   return (
     <div className=' space-y-6 lg:space-y-10'>
       {/* pagination  */}
-      <Pagination
+      {/* <Pagination
         loading={loading}
         page={page}
         handlePagination={handlePagination}
-      />
+      /> */}
       {/* filtering */}
-      <filter />
+      {/* <filter /> */}
       <div className='grid gap-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
         {loading ? (
           <LazyQuotes />
         ) : (
           quotes.map((quote: Quote) => (
             // actual quote
-            <Link
-              href={`/quotes/${quote._id}`}
-              key={quote._id}
-              className='border rounded min-w-full px-4 py-6 space-y-4 hover:border-blue-400 hover:shadow-2xl hover:shadow-blue-400/30'>
-              <Paragraph className=''>{`${quote.content}`}</Paragraph>
-
-              <Paragraph className='text-right text-gray-100'>
-                - {quote.author}
-              </Paragraph>
-            </Link>
+            <QuoteLink key={quote._id} quote={quote} />
           ))
         )}
       </div>
