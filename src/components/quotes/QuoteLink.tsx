@@ -1,7 +1,7 @@
-import Link from "next/link";
-import Paragraph from "../text/Paragraph";
-import { Quote } from "@/types/type";
-import { MouseEventHandler } from "react";
+import Link from 'next/link';
+import Paragraph from '../text/Paragraph';
+import { Quote } from '@/types/type';
+import { MouseEventHandler } from 'react';
 
 const QuoteLink = ({
   quote,
@@ -15,14 +15,16 @@ const QuoteLink = ({
       href={`/quotes/${quote._id}`}
       key={quote._id}
       onClick={onClick}
-      className='border rounded min-w-full px-4 py-6 space-y-4 hover:border-blue-400 hover:shadow-2xl hover:shadow-blue-400/30'>
+      className='grid border rounded min-w-full px-4 py-6 space-y-4 hover:border-blue-400 hover:shadow-2xl hover:shadow-blue-400/30'>
       <Paragraph className=''>{`${quote.content}`}</Paragraph>
 
-      <Paragraph className='text-right text-gray-100'>
+      {/* <Divider /> */}
+
+      <Paragraph className='text-right text-gray-100 w-fit border-b border-neutral-600 pb-1 self-end justify-self-end'>
         - {quote.author}
       </Paragraph>
     </Link>
   );
 };
 
-export default QuoteLink
+export default QuoteLink;

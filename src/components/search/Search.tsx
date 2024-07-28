@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import { SearchProps } from '@/types/type';
 import loadingIcon from '@/assets/loading-svgrepo-com.svg';
+import { useQuery } from '@tanstack/react-query';
 
 const Search = ({
   setResults,
@@ -14,24 +15,27 @@ const Search = ({
 }: SearchProps) => {
   const [showSearch, setShowSearch] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
-  const [loading, setLoading] = useState<boolean>(false);
 
-  const fetchSearchResult = async () => {
-    setLoading(true);
-    try {
-      const response = await fetch(
-        `https://api.quotable.io/search/quotes?query=${searchTerm.trim()}`
-      );
-      const data = await response.json();
-      if (response.ok) {
-        setResults(data.results);
-        setLoading(false);
-      }
-    } catch (error) {
-      console.error(error);
-      setLoading(false);
+  const url = `https://api.quotable.io/search/quotes?query=${searchTerm.trim()}`;
+
+  const fetchSearchResult = async (url: string) => {
+    if (searchTerm) {
+      const response = await fetch(url);
+      return await response.json();
     }
   };
+
+  const { data, isLoading } = useQuery({
+    queryKey: ['search', url],
+    queryFn: async () => fetchSearchResult(url),
+    enabled: !!searchTerm.trim(),
+  });
+
+  useEffect(() => {
+    if (data && data.results) {
+      setResults(data.results);
+    }
+  }, [data, setResults]);
 
   const handleCancelSearch = () => {
     setShowSearch(false);
@@ -39,12 +43,7 @@ const Search = ({
     setResults(null);
   };
 
-  // Search for user input any time the search term changes
-  useEffect(() => {
-    searchTerm && fetchSearchResult();
-  }, [searchTerm]);
-
-  // focus the search input anytime the search component mounts
+  // // focus the search input anytime the search component mounts
   useEffect(() => {
     if (showSearch) {
       inputRef.current && inputRef.current.focus();
@@ -95,7 +94,7 @@ const Search = ({
         className={cn(
           'cursor-pointer absolute top-1/4 -translate-1/2 right-6',
           showSearch && results ? 'block' : 'hidden',
-          !loading && searchTerm ? 'block' : 'hidden'
+          !isLoading && searchTerm ? 'block' : 'hidden'
         )}
       />
 
@@ -107,7 +106,7 @@ const Search = ({
         className={cn(
           'cursor-pointer animate-loading absolute top-1/4 -translate-1/2 right-6',
           showSearch ? 'block' : 'hidden',
-          loading && searchTerm ? 'block' : 'hidden'
+          isLoading && searchTerm ? 'block' : 'hidden'
         )}
       />
     </div>

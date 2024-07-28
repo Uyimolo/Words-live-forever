@@ -19,7 +19,7 @@ const SearchResults = ({
   return (
     <div
       className={cn(
-        'w-full bg-black absolute left-0 top-32 h-screen px-4 overflow-hidden space-y-4 z-10 md:top-20 md:px-8 lg:px-12',
+        'w-full bg-black fixed left-0 top-32 h-screen px-4 overflow-hidden space-y-4 z-10 md:top-20 md:px-8 lg:px-12',
         !results?.length && searchTerm && 'h-12 bg-transparent',
         searchTerm ? 'block' : 'hidden'
       )}>

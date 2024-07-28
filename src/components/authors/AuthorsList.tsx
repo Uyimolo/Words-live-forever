@@ -5,13 +5,12 @@ import Pagination from '../quotes/Pagination';
 import Paragraph from '../text/Paragraph';
 import { useEffect, useState } from 'react';
 import { Author, AuthorsData, Quote } from '@/types/type';
+import HeadingOne from '../text/HeadingOne';
 
 const AuthorsList = ({ authorsData }: { authorsData: AuthorsData }) => {
   const initialQuotes = authorsData.results;
-
   const [quotes, setQuotes] = useState(initialQuotes);
   const [page, setPage] = useState<number>(1);
-  const [filter, setFilter] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
 
   const fetchQuotes = async () => {
@@ -40,7 +39,7 @@ const AuthorsList = ({ authorsData }: { authorsData: AuthorsData }) => {
 
   useEffect(() => {
     fetchQuotes();
-  }, [page, filter]);
+  }, [page]);
 
   const handlePagination = (pageCount: number) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -53,8 +52,7 @@ const AuthorsList = ({ authorsData }: { authorsData: AuthorsData }) => {
   };
   return (
     <div className=' space-y-6 lg:space-y-10'>
-      {/* filtering */}
-      {/* <filter /> */}
+      <HeadingOne>"WISE MEN'S HUB"</HeadingOne>
       <div className='grid gap-2 md:grid-cols-2 lg:grid-cols-3'>
         {loading ? (
           <LazyQuotes />
