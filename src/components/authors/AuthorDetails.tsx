@@ -5,7 +5,7 @@ import Paragraph from '../text/Paragraph';
 const AuthorDetails = ({ author }: { author: Author }) => {
   const { name, bio } = author;
   return (
-    <div className='w-full grid min-h-full items-center'>
+    <div className='w-full'>
       <div className='max-w-xl lg:max-w-3xl'>
         <div className='space-y-4'>
           <h2 className='text-blue-400 text-xl'>

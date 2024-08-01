@@ -1,7 +1,6 @@
 'use client';
 import logo from '@/assets/logo.png';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
 
 const Loading = () => {
   return (
