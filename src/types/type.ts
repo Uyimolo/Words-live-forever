@@ -77,3 +77,10 @@ export interface SearchProps {
   setSearchTerm: (term: string) => void;
   searchTerm: string;
 }
+
+export interface SearchResultsProps {
+  results: Quote[] | null;
+  searchTerm: string;
+  setSearchTerm: (term: string) => void;
+  setResults: (results: Quote[] | null) => void;
+}

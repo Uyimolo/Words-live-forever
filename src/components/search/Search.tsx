@@ -1,11 +1,20 @@
+'use client';
+import { useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
+
+import { IoSearchOutline } from 'react-icons/io5';
+import { AiOutlineLoading3Quarters } from 'react-icons/ai';
+import { CiCircleRemove } from 'react-icons/ci';
 import search from '@/assets/search-alt-2-svgrepo-com.svg';
 import cancel from '@/assets/cancel-svgrepo-com.svg';
-import { cn } from '@/utilities/cn';
-import Image from 'next/image';
-import { useEffect, useRef, useState } from 'react';
-import { SearchProps } from '@/types/type';
 import loadingIcon from '@/assets/loading-svgrepo-com.svg';
+// utilities
+import { cn } from '@/utilities/cn';
+
+// query
 import { useQuery } from '@tanstack/react-query';
+// type
+import { SearchProps } from '@/types/type';
 
 const Search = ({
   setResults,
@@ -31,6 +40,7 @@ const Search = ({
     enabled: !!searchTerm.trim(),
   });
 
+  // set results when data is recieved from useQuery
   useEffect(() => {
     if (data && data.results) {
       setResults(data.results);
@@ -43,7 +53,7 @@ const Search = ({
     setResults(null);
   };
 
-  // // focus the search input anytime the search component mounts
+  //focus the search input anytime the search component mounts
   useEffect(() => {
     if (showSearch) {
       inputRef.current && inputRef.current.focus();
@@ -54,8 +64,9 @@ const Search = ({
     <div
       className={cn(
         'w-fit z-10 md:w-full md:relative md:left-0 md:right-0 md:translate-0 px-4',
+        // when showsearch is true change position of search div to absolute and move it down below the main header
         showSearch
-          ? 'w-full absolute -bottom-10 right-0 h-fit left-1/2 -translate-x-1/2'
+          ? 'w-full absolute -bottom-10 right-0 h-fit left-1/2 -translate-x-1/2 md:relative md:bottom-0 md:translate-x-0 md:left-0'
           : ''
       )}>
       <input
@@ -70,14 +81,12 @@ const Search = ({
       />
 
       {/* search icon */}
-      <Image
-        src={search}
-        alt='search'
-        width={20}
-        height={20}
+      <IoSearchOutline
+        title='Search Quotes'
         onClick={() => setShowSearch(true)}
         className={cn(
-          'cursor-pointer',
+          'cursor-pointer text-white text-2xl',
+          // position search icon properly to display on the input when showsearch is true
           !showSearch
             ? 'md:absolute md:top-1/4 md-translate-y-1/2 md:left-7'
             : 'absolute top-1/2 -translate-y-1/2 left-7'
@@ -85,26 +94,23 @@ const Search = ({
       />
 
       {/* cancel search icon */}
-      <Image
-        src={cancel}
-        alt='cancel search'
-        width={20}
-        height={20}
+      <CiCircleRemove
+        title='Cancel Search'
         onClick={handleCancelSearch}
         className={cn(
-          'cursor-pointer absolute top-1/4 -translate-1/2 right-6',
+          'cursor-pointer text-3xl absolute top-1/2 -translate-y-1/2 right-6 text-white',
           showSearch && results ? 'block' : 'hidden',
-          !isLoading && searchTerm ? 'block' : 'hidden'
+          // hide cancel on small screens when loading a new query
+          !isLoading && showSearch ? 'block' : 'hidden',
+          // hide cancel on large screens until a search value is inputed
+          searchTerm && !isLoading ? 'md:block' : 'md:hidden'
         )}
       />
 
-      <Image
-        src={loadingIcon}
-        alt='cancel search'
-        width={20}
-        height={20}
+      <AiOutlineLoading3Quarters
+        title='Loading search results'
         className={cn(
-          'cursor-pointer animate-loading absolute top-1/4 -translate-1/2 right-6',
+          'cursor-pointer text-xl animate-loading absolute top-1/4 -translate-1/2 right-6 text-white',
           showSearch ? 'block' : 'hidden',
           isLoading && searchTerm ? 'block' : 'hidden'
         )}

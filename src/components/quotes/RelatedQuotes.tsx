@@ -13,7 +13,7 @@ const RelatedQuotes = async ({ tags }: { tags: string[] }) => {
         More on <span className='text-blue-400'>{tags?.join(' | ')}</span>
       </Paragraph>
 
-      <div className='grid gap-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
+      <div className='grid gap-2 md:grid-cols-2 md:gap-10 lg:grid-cols-3'>
         {relatedQuotes?.map((quote: Quote) => (
           <QuoteLink key={quote._id} quote={quote} />
         ))}

@@ -52,7 +52,7 @@ const AuthorsList = ({ authorsData }: { authorsData: AuthorsData }) => {
   };
   return (
     <div className=' space-y-6 lg:space-y-10'>
-      <HeadingOne>"WISE MEN'S HUB"</HeadingOne>
+      <HeadingOne>{`"WISE MEN'S HUB"`}</HeadingOne>
       <div className='grid gap-2 md:grid-cols-2 lg:grid-cols-3'>
         {loading ? (
           <LazyQuotes />
