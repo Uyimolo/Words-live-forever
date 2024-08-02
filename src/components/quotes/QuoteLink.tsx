@@ -1,12 +1,11 @@
 import { MouseEventHandler } from 'react';
 import Link from 'next/link';
 import { FaEye } from 'react-icons/fa';
-import { FaRegCopy } from 'react-icons/fa';
 import Paragraph from '../text/Paragraph';
 import { Quote } from '@/types/type';
-import ShareQuote from '../share/ShareQuote';
 import CopyToClipBoard from '../CopyToClipBoard/CopyToClipBoard';
 import AddToFavorites from '../like-favourite/AddToFavorites';
+import Share from '../share/Share';
 
 const QuoteLink = ({
   quote,
@@ -32,7 +31,7 @@ const QuoteLink = ({
 
       {/* share, add to collection etc (template) */}
       <div className='flex gap-4'>
-        <ShareQuote author={author} _id={_id} />
+        <Share quote={quote} variant='quote' />
 
         <CopyToClipBoard text={`"${content}" -${author}`} />
 

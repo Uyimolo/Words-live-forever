@@ -69,6 +69,7 @@ const Search = ({
           ? 'w-full absolute -bottom-10 right-0 h-fit left-1/2 -translate-x-1/2 md:relative md:bottom-0 md:translate-x-0 md:left-0'
           : ''
       )}>
+      
       <input
         ref={inputRef}
         type='text'

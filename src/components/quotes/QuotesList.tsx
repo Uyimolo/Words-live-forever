@@ -32,14 +32,14 @@ const QuotesList = () => {
     const timeout = setTimeout(() => {
       setPage(pageCount);
       return clearTimeout(timeout);
-    }, 500);
+    }, 1000);
   };
 
   return (
     <div className='space-y-6 lg:space-y-10'>
       <HeadingOne>{`"IN THE WORDS OF THE WISE"`}</HeadingOne>
 
-      <div className='grid gap-2 md:grid-cols-2 md:gap-10 lg:grid-cols-3'>
+      <div className='grid gap-6 md:grid-cols-2 md:gap-10 lg:grid-cols-3'>
         {isLoading ? (
           <LazyQuotes />
         ) : (

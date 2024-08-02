@@ -1,17 +1,15 @@
-import AuthorsList from "@/components/authors/AuthorsList"
+import AuthorsList from '@/components/authors/AuthorsList';
+import { Metadata } from 'next';
 
-const fetchAuthors = async () => {
-    const response = await fetch(`https://api.quotable.io/authors`)
-    const data = response.json()
-    console.log(data)
-    return data
-}
+export const metadata: Metadata = {
+  title: 'Quotes - Words Live Forever',
+  description: 'Bringing important, life shaping words to you ',
+  keywords: ['quotes', 'inspirational quotes'],
+  robots: 'index, follow',
+};
 
 const page = async () => {
-    const authors = await fetchAuthors()
-  return (
-      <AuthorsList authorsData={ authors} />
-  )
-}
+  return <AuthorsList authorsData={authors.results} />;
+};
 
-export default page
+export default page;
