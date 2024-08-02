@@ -1,86 +1,47 @@
 'use client';
-import Link from 'next/link';
 import LazyQuotes from '../quotes/LazyQuotes';
 import Pagination from '../quotes/Pagination';
-import Paragraph from '../text/Paragraph';
-import { useEffect, useState } from 'react';
-import { Author, AuthorsData, Quote } from '@/types/type';
+import { useState } from 'react';
+import { Author } from '@/types/type';
 import HeadingOne from '../text/HeadingOne';
+import AuthorCard from './AuthorCard';
+import { useQuery } from '@tanstack/react-query';
+import { fetchData } from '@/utilities/fetchData/fetchData';
 
-const AuthorsList = ({ authorsData }: { authorsData: AuthorsData }) => {
-  const initialQuotes = authorsData.results;
-  const [quotes, setQuotes] = useState(initialQuotes);
+const AuthorsList = () => {
   const [page, setPage] = useState<number>(1);
-  const [loading, setLoading] = useState<boolean>(false);
 
-  const fetchQuotes = async () => {
-    // to make sure users to refetch page one data and rely only on what is gotten from the server component
-    if (page > 1) {
-      setLoading(true);
-      try {
-        const response = await fetch(
-          `https://api.quotable.io/authors?page=${page}&sortBy=content`
-        );
+  const url = `https://api.quotable.io/authors?page=${page}&sortBy=content`;
 
-        const data = await response.json();
-
-        if (response.ok) {
-          setQuotes(data.results);
-          setLoading(false);
-        }
-      } catch (error) {
-        console.error(error);
-        setLoading(false);
-      }
-    } else {
-      setQuotes(initialQuotes);
-    }
-  };
-
-  useEffect(() => {
-    fetchQuotes();
-  }, [page]);
+  const { data: authors, isLoading } = useQuery({
+    queryKey: ['authors', url],
+    queryFn: async () => fetchData(url),
+  });
 
   const handlePagination = (pageCount: number) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
-    // [TO MYSELF] This is to delay the transition to prevent a flickering effect, i would add framer motion to intercept the skeleton and make it fade gently away later
     const timeout = setTimeout(() => {
       setPage(pageCount);
       return clearTimeout(timeout);
     }, 1000);
   };
+
   return (
     <div className=' space-y-6 lg:space-y-10'>
       <HeadingOne>{`"WISE MEN'S HUB"`}</HeadingOne>
-      <div className='grid gap-2 md:grid-cols-2 lg:grid-cols-3'>
-        {loading ? (
+      <div className='grid gap-6 md:grid-cols-2 md:gap-10 lg:grid-cols-3'>
+        {isLoading ? (
           <LazyQuotes />
         ) : (
-          quotes.map((author: Author) => (
-            // actual quote
-            <Link
-              href={`/authors/${author._id}`}
-              key={author._id}
-              className='border rounded min-w-full px-4 py-6 space-y-4 hover:border-blue-400 hover:shadow-2xl hover:shadow-blue-400/30'>
-              <Paragraph>{author.name}</Paragraph>
-
-              <Paragraph className=''>{`${author.bio}`}</Paragraph>
-
-              <Paragraph className='text-right text-gray-100'>
-                - {author.description}
-              </Paragraph>
-
-              {/* <Link href={author.link} className='p-1 border border-white'>
-                <Paragraph>Wikipedia</Paragraph>
-              </Link> */}
-            </Link>
+          authors.results.map((author: Author) => (
+            <AuthorCard key={author._id} author={author} />
           ))
         )}
       </div>
       {/* pagination  */}
       <Pagination
-        loading={loading}
+        loading={isLoading}
         page={page}
         handlePagination={handlePagination}
       />

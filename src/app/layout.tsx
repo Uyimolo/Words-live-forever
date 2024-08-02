@@ -11,7 +11,7 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Words Live Forever',
-  description: 'Bringing words to you ',
+  description: 'Bringing important, life shaping words to you ',
   keywords: ['quotes', 'inspirational quotes'],
   robots: 'index, follow',
 };

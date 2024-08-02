@@ -9,6 +9,8 @@ const LazyQuotes = () => {
             <div className='h-6 w-full bg-gray-500/50'></div>
 
             <div className='h-6 w-10/12 bg-gray-500/50'></div>
+
+            <div className='h-6 w-10/12 bg-gray-500/50'></div>
           </div>
 
           <div className='h-3 w-1/2 bg-gray-500/50 self-end'></div>
