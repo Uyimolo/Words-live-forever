@@ -3,13 +3,10 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
-// utilities
 import { fetchData } from '@/utilities/fetchData/fetchData';
 
-// types
 import { Quote } from '@/types/type';
 
-// components
 import Pagination from './Pagination';
 import LazyQuotes from './LazyQuotes';
 import QuoteLink from './QuoteLink';

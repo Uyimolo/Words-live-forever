@@ -2,14 +2,14 @@ import AuthorsList from '@/components/authors/AuthorsList';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Quotes - Words Live Forever',
+  title: 'Authors - Words Live Forever',
   description: 'Bringing important, life shaping words to you ',
   keywords: ['quotes', 'inspirational quotes'],
   robots: 'index, follow',
 };
 
 const page = async () => {
-  return <AuthorsList authorsData={authors.results} />;
+  return <AuthorsList />;
 };
 
 export default page;

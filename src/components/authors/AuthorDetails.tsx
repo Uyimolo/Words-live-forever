@@ -1,26 +1,30 @@
 import { Author } from '@/types/type';
-import React from 'react';
+import React, { Suspense } from 'react';
 import Paragraph from '../text/Paragraph';
+import ViewAuthor from './ViewAuthor';
+import ScrollToTop from '@/utilities/ScrollToTop';
+import RelatedQuotes from '../quotes/RelatedQuotes';
+import LazyQuotes from '../quotes/LazyQuotes';
 
 const AuthorDetails = ({ author }: { author: Author }) => {
-  const { name, bio } = author;
+  const { name } = author;
+
+  // didn't want lazyQuotes to clutter the suspense container so i defined it up here
+  const lazyQuotesContainer = (
+    <div className='grid gap-6 md:grid-cols-2 md:gap-10 lg:grid-cols-3'>
+      <LazyQuotes />
+    </div>
+  );
+
   return (
-    <div className='w-full'>
-      <div className='max-w-xl lg:max-w-3xl'>
-        <div className='space-y-4'>
-          <h2 className='text-blue-400 text-xl'>
-            {name ? name : 'Words Live Forever Team.'}
-          </h2>
+    <div className='w-full grid min-h-full gap-20'>
+      <ScrollToTop />
 
-          <h1 className='text-white text-base font-semibold relative lg:text-base'>
-            {bio ? bio : 'Getting authors details in a bit'}
-          </h1>
+      <ViewAuthor author={author} />
 
-          <Paragraph className='text-white'>
-            See more quotes by author
-          </Paragraph>
-        </div>
-      </div>
+      <Suspense fallback={lazyQuotesContainer}>
+        <RelatedQuotes name={name} />
+      </Suspense>
     </div>
   );
 };
