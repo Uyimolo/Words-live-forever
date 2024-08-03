@@ -20,7 +20,6 @@ const QuotesList = () => {
 
   const {
     data: quotes,
-    isPending,
     isFetching,
   } = useQuery({
     queryKey: ['quotes', buildUrl(page)],
@@ -45,7 +44,7 @@ const QuotesList = () => {
       <HeadingOne>{`"IN THE WORDS OF THE WISE"`}</HeadingOne>
 
       <div className='grid gap-6 md:grid-cols-2 md:gap-10 lg:grid-cols-3'>
-        {isPending ? (
+        {isFetching ? (
           <LazyQuotes />
         ) : (
           quotes.results.map((quote: Quote) => (

@@ -19,13 +19,13 @@ const QuoteLink = ({
   return (
     <div
       onClick={onClick}
-      className='flex flex-col justify-between border rounded min-w-full px-4 py-4 space-y-4 hover:border-blue-400 hover:shadow-2xl focus:shadow-2xl focus:shadow-blue-400/30 hover:shadow-blue-400/30 focus:border-blue-400 focus:outline-blue-400'>
+      className='flex flex-col justify-between border border-gray-500 rounded bg-gray-900 min-w-full px-4 py-4 space-y-4 hover:border-blue-400 hover:shadow-2xl focus:shadow-2xl focus:shadow-blue-400/30 hover:shadow-blue-400/30 focus:border-blue-400 focus:outline-blue-400'>
       <div className='space-y-4'>
         <Paragraph className='text-blue-400'>{tags.join(' | ')}</Paragraph>
         <Paragraph className='self-start'>{`"${content}"`}</Paragraph>
       </div>
 
-      <Paragraph className='text-right text-gray-100 w-fit border-b border-neutral-600 pb-1 self-end justify-self-end'>
+      <Paragraph className='text-right w-fit border-b border-neutral-600 pb-1 self-end justify-self-end'>
         - {author}
       </Paragraph>
 

@@ -24,7 +24,7 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body
-        className={`${inter.className} flex flex-col min-h-screen  bg-black`}>
+        className={`${inter.className} flex flex-col min-h-screen bg-gray-900`}>
         <TanstackQueryProvider>
           <Header />
           <main className='flex-1 grid py-16 px-4 md:px-8 lg:px-12 lg:py-28'>
