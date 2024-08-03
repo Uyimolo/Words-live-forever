@@ -1,6 +1,5 @@
 import { Author } from '@/types/type';
 import React, { Suspense } from 'react';
-import Paragraph from '../text/Paragraph';
 import ViewAuthor from './ViewAuthor';
 import ScrollToTop from '@/utilities/ScrollToTop';
 import RelatedQuotes from '../quotes/RelatedQuotes';

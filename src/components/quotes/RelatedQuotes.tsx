@@ -19,11 +19,13 @@ const RelatedQuotes = async ({
       `https://api.quotable.io/quotes/random?tags=${tags?.join('|')}&limit=10`
     );
     relatedQuotes = await response.json();
+    console.log('wrong')
   } else {
     const response = await fetch(
       `https://api.quotable.io/quotes/random?author=${name}&limit=10`
     );
     relatedQuotes = await response.json();
+    console.log('lovely' + relatedQuotes)
   }
 
   return (
