@@ -19,17 +19,16 @@ const AuthorsList = () => {
     queryFn: async () => fetchData(buildUrl(page)),
   });
 
-  const handlePagination = useCallback(
-    (pageCount: number) => {
-      // optimistic ui update (atleast I think that is what this is doing)
-      setPage(pageCount);
+  console.log(authors);
 
-      requestAnimationFrame(() => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      });
-    },
-    [page]
-  );
+  const handlePagination = useCallback((pageCount: number) => {
+    // optimistic ui update (atleast I think that is what this is doing)
+    setPage(pageCount);
+
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }, []);
 
   return (
     <div className=' space-y-6 lg:space-y-10'>

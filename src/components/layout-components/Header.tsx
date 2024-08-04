@@ -50,8 +50,8 @@ export default function Header() {
           <Link
             key={index}
             className={cn(
-              ' text-sm text-white lg:text-base ',
-              pathName === item.href ? 'text-blue-400' : ''
+              ' text-sm text-neutral-500 lg:text-base hover:text-neutral-300',
+              pathName === item.href ? 'text-neutral-100' : ''
             )}
             href={item.href}>
             {item.label}
