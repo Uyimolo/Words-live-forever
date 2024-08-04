@@ -1,31 +1,46 @@
 'use client';
 
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
 
 import { fetchData } from '@/utilities/fetchData/fetchData';
 
-import { Quote } from '@/types/type';
+import { FilterOptions, Quote } from '@/types/type';
 
 import Pagination from './Pagination';
 import LazyQuotes from './LazyQuotes';
 import QuoteLink from './QuoteLink';
 import HeadingOne from '../text/HeadingOne';
 import { FaFilter } from 'react-icons/fa';
-import FilterQuotes from './FilterQuotes';
+import FilterQuotes from '../filterQuotes/FilterQuotes';
 import { cn } from '@/utilities/cn';
 import Modal from '../modal/Modal';
+
+const initialFilters: FilterOptions = {
+  tags: [],
+  author: '',
+  length: 'none',
+};
 
 const QuotesList = () => {
   const [page, setPage] = useState<number>(1);
   const [showFilters, setShowFilters] = useState<boolean>(false);
+  const [filters, setFilters] = useState<FilterOptions>(initialFilters);
 
-  const buildUrl = (page: number) =>
-    `https://api.quotable.io/quotes?page=${page}&sortBy=content`;
+  useEffect(() => {
+    console.log(filters);
+  }, [filters]);
+
+  const { tags, author, length } = filters;
+
+  const buildUrl = (page: number, tags: string[]) =>
+    `https://api.quotable.io/quotes?page=${page}${
+      tags.length > 0 && `&tags=${tags.join('|')}`
+    }&sortBy=content`;
 
   const { data: quotes, isFetching } = useQuery({
-    queryKey: ['quotes', buildUrl(page)],
-    queryFn: async () => fetchData(buildUrl(page)),
+    queryKey: ['quotes', buildUrl(page, tags)],
+    queryFn: async () => fetchData(buildUrl(page, tags)),
     placeholderData: keepPreviousData,
   });
 
@@ -53,7 +68,11 @@ const QuotesList = () => {
 
       {/* filter modal */}
       <Modal showModal={showFilters} showModalFunc={setShowFilters}>
-        <FilterQuotes />
+        <FilterQuotes
+          filters={filters}
+          closeFilter={setShowFilters}
+          setFilters={setFilters}
+        />
       </Modal>
 
       <HeadingOne>{`"IN THE WORDS OF THE WISE"`}</HeadingOne>
