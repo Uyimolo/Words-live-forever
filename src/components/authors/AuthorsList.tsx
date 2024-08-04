@@ -1,7 +1,7 @@
 'use client';
 import LazyQuotes from '../quotes/LazyQuotes';
 import Pagination from '../quotes/Pagination';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Author } from '@/types/type';
 import HeadingOne from '../text/HeadingOne';
 import AuthorCard from './AuthorCard';
@@ -11,27 +11,30 @@ import { fetchData } from '@/utilities/fetchData/fetchData';
 const AuthorsList = () => {
   const [page, setPage] = useState<number>(1);
 
-  const url = `https://api.quotable.io/authors?page=${page}&sortBy=content`;
+  const buildUrl = (page: number) =>
+    `https://api.quotable.io/authors?page=${page}&sortBy=content`;
 
-  const { data: authors, isLoading } = useQuery({
-    queryKey: ['authors', url],
-    queryFn: async () => fetchData(url),
+  const { data: authors, isFetching } = useQuery({
+    queryKey: ['authors', buildUrl(page)],
+    queryFn: async () => fetchData(buildUrl(page)),
   });
 
-  const handlePagination = (pageCount: number) => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  console.log(authors);
 
-    const timeout = setTimeout(() => {
-      setPage(pageCount);
-      return clearTimeout(timeout);
-    }, 1000);
-  };
+  const handlePagination = useCallback((pageCount: number) => {
+    // optimistic ui update (atleast I think that is what this is doing)
+    setPage(pageCount);
+
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }, []);
 
   return (
     <div className=' space-y-6 lg:space-y-10'>
       <HeadingOne>{`"WISE MEN'S HUB"`}</HeadingOne>
       <div className='grid gap-6 md:grid-cols-2 md:gap-10 lg:grid-cols-3'>
-        {isLoading ? (
+        {isFetching ? (
           <LazyQuotes />
         ) : (
           authors.results.map((author: Author) => (
@@ -41,7 +44,7 @@ const AuthorsList = () => {
       </div>
       {/* pagination  */}
       <Pagination
-        loading={isLoading}
+        loading={isFetching}
         page={page}
         handlePagination={handlePagination}
       />

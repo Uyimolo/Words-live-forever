@@ -19,7 +19,7 @@ const ViewQuote = ({
 
         <Divider className='mb-8 mt-4' />
 
-        <h1 className='text-white text-2xl font-semibold relative md:text-3xl lg:text-4xl'>
+        <h1 className='text-gray-300 text-2xl font-semibold relative md:text-3xl lg:text-4xl'>
           <span className='text-4xl md:text-5xl'>{`"`}</span>
           {content ? content : 'Getting your favourites quotes in a bit'}{' '}
           <span className='text-3xl -bottom-6 md:text-5xl absolute md:-bottom-8'>{`"`}</span>

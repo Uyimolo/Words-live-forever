@@ -3,34 +3,34 @@ import React from 'react';
 import { Metadata, ResolvingMetadata } from 'next';
 
 type Props = {
-  params: { authorId: string };
+  params: { slug: string };
 };
 
 export async function generateMetadata(
   { params }: Props,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  
-  const id = params.authorId;
+  const slug = params.slug;
 
   const author = await fetch(
-    `https://api.quotable.io/authors/${params.authorId}`
+    `https://api.quotable.io/authors?slug=${slug}`
   ).then((res) => res.json());
 
   return {
-    title: author.name + ' -Words Live Forever',
-    description: author.description,
+    title: author.results[0].name + ' -Words Live Forever',
+    description: author.results[0].description,
     keywords: ['quotes', 'author'],
     robots: 'index, follow',
   };
 }
 
-const Author = async ({ params }: { params: { authorId: string } }) => {
+const Author = async ({ params }: { params: { slug: string } }) => {
   const response = await fetch(
-    `https://api.quotable.io/authors/${params.authorId}`
+    `https://api.quotable.io/authors?slug=${params.slug}`
   );
 
-  const author = await response.json();
+  const data = await response.json();
+  const author = data.results[0];
 
   return <AuthorDetails author={author} />;
 };

@@ -7,6 +7,15 @@ export interface Quote {
   tags: string[];
 }
 
+export interface Tag {
+  _id: string;
+  name: string;
+  slug: string;
+  quoteCount: number;
+  dateAdded: string;
+  dateModified: string;
+}
+
 export interface QuotesData {
   count: number;
   totalCount: number;

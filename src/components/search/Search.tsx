@@ -1,19 +1,10 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
-import Image from 'next/image';
-
 import { IoSearchOutline } from 'react-icons/io5';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { CiCircleRemove } from 'react-icons/ci';
-import search from '@/assets/search-alt-2-svgrepo-com.svg';
-import cancel from '@/assets/cancel-svgrepo-com.svg';
-import loadingIcon from '@/assets/loading-svgrepo-com.svg';
-// utilities
 import { cn } from '@/utilities/cn';
-
-// query
 import { useQuery } from '@tanstack/react-query';
-// type
 import { SearchProps } from '@/types/type';
 
 const Search = ({
@@ -69,14 +60,13 @@ const Search = ({
           ? 'w-full absolute -bottom-10 right-0 h-fit left-1/2 -translate-x-1/2 md:relative md:bottom-0 md:translate-x-0 md:left-0'
           : ''
       )}>
-      
       <input
         ref={inputRef}
         type='text'
         value={searchTerm}
         onChange={(event) => setSearchTerm(event.target.value)}
         className={cn(
-          'w-full pl-10 pr-4 py-2 rounded-full bg-black border border-white text-white',
+          'w-full pl-10 pr-4 py-2 rounded-full bg-transparent border border-gray-500 text-neutral-300',
           showSearch ? 'block' : 'hidden md:block'
         )}
       />
@@ -86,7 +76,7 @@ const Search = ({
         title='Search Quotes'
         onClick={() => setShowSearch(true)}
         className={cn(
-          'cursor-pointer text-white text-2xl',
+          'cursor-pointer text-gray-500 text-2xl',
           // position search icon properly to display on the input when showsearch is true
           !showSearch
             ? 'md:absolute md:top-1/4 md-translate-y-1/2 md:left-7'
@@ -99,7 +89,7 @@ const Search = ({
         title='Cancel Search'
         onClick={handleCancelSearch}
         className={cn(
-          'cursor-pointer text-3xl absolute top-1/2 -translate-y-1/2 right-6 text-white',
+          'cursor-pointer text-3xl absolute top-1/2 -translate-y-1/2 right-6 text-gray-500',
           showSearch && results ? 'block' : 'hidden',
           // hide cancel on small screens when loading a new query
           !isLoading && showSearch ? 'block' : 'hidden',
@@ -111,7 +101,7 @@ const Search = ({
       <AiOutlineLoading3Quarters
         title='Loading search results'
         className={cn(
-          'cursor-pointer text-xl animate-loading absolute top-1/4 -translate-1/2 right-6 text-white',
+          'cursor-pointer text-xl animate-loading absolute top-1/4 -translate-1/2 right-6 text-gray-500',
           showSearch ? 'block' : 'hidden',
           isLoading && searchTerm ? 'block' : 'hidden'
         )}
