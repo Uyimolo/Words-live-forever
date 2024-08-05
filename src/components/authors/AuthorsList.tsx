@@ -19,7 +19,6 @@ const AuthorsList = () => {
     queryFn: async () => fetchData(buildUrl(page)),
   });
 
-  console.log(authors);
 
   const handlePagination = useCallback((pageCount: number) => {
     // optimistic ui update (atleast I think that is what this is doing)

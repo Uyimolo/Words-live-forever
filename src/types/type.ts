@@ -93,3 +93,21 @@ export interface SearchResultsProps {
   setSearchTerm: (term: string) => void;
   setResults: (results: Quote[] | null) => void;
 }
+
+export interface FilterOptions {
+  tags: string[] | [];
+  author: string[];
+  length: 'none' | 'short' | 'medium' | 'long';
+}
+
+export interface AccordionStateOption {
+  name: string;
+  active: boolean;
+}
+
+export interface FilterProps {
+  setSelectedFilters: (filters: FilterOptions) => void;
+  selectedFilters: FilterOptions;
+  accordionState: AccordionStateOption;
+  handleAccordionState: (variant: string) => void;
+}
