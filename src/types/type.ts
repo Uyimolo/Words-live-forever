@@ -96,7 +96,18 @@ export interface SearchResultsProps {
 
 export interface FilterOptions {
   tags: string[] | [];
-  author: string;
+  author: string[];
   length: 'none' | 'short' | 'medium' | 'long';
 }
 
+export interface AccordionStateOption {
+  name: string;
+  active: boolean;
+}
+
+export interface FilterProps {
+  setSelectedFilters: (filters: FilterOptions) => void;
+  selectedFilters: FilterOptions;
+  accordionState: AccordionStateOption;
+  handleAccordionState: (variant: string) => void;
+}

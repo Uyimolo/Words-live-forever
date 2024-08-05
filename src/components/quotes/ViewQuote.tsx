@@ -1,5 +1,5 @@
 import Paragraph from '../text/Paragraph';
-import Divider from './divider/Divider';
+import Divider from '../divider/Divider';
 
 const ViewQuote = ({
   author,

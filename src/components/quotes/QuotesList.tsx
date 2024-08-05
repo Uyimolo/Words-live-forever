@@ -18,7 +18,7 @@ import Modal from '../modal/Modal';
 
 const initialFilters: FilterOptions = {
   tags: [],
-  author: '',
+  author: [],
   length: 'none',
 };
 
@@ -69,7 +69,7 @@ const QuotesList = () => {
       {/* filter modal */}
       <Modal showModal={showFilters} showModalFunc={setShowFilters}>
         <FilterQuotes
-          filters={filters}
+          initialFilters={initialFilters}
           closeFilter={setShowFilters}
           setFilters={setFilters}
         />

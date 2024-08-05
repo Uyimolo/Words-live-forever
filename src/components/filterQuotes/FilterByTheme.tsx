@@ -1,47 +1,62 @@
-import { FilterOptions, Tag } from '@/types/type';
+import { FilterProps, Tag } from '@/types/type';
 import Paragraph from '../text/Paragraph';
 import { IoIosAddCircleOutline } from 'react-icons/io';
 import { useQuery } from '@tanstack/react-query';
 import { fetchData } from '@/utilities/fetchData/fetchData';
 import { useState } from 'react';
 import { cn } from '@/utilities/cn';
+import { FaCaretDown } from 'react-icons/fa';
+import { motion } from 'framer-motion';
 
 const FilterByTheme = ({
-  setFilters,
-  filters,
-}: {
-  setFilters: (filters: FilterOptions) => void;
-  filters: FilterOptions;
-}) => {
+  setSelectedFilters,
+  selectedFilters,
+  accordionState,
+  handleAccordionState,
+}: FilterProps) => {
   const [selectedThemes, setSelectedThemes] = useState<string[]>([]);
 
-  const { isFetching, data: tags } = useQuery({
+  const { data: tags, isFetching } = useQuery({
     queryKey: ['tags'],
     queryFn: async () => fetchData('https://quotable.io/tags'),
   });
 
+  // this function toggles selected themes and then updates the selected filters array
   const handleThemeSelection = (tagName: string) => {
     setSelectedThemes((prevSelectedThemes) => {
       const updatedThemes = prevSelectedThemes.includes(tagName)
         ? prevSelectedThemes.filter((tag) => tag !== tagName)
         : [...prevSelectedThemes, tagName];
 
-      // Directly set the updated filters without using a function
-      setFilters({
-        ...filters,
+      // update selected filters
+      setSelectedFilters({
+        ...selectedFilters,
         tags: updatedThemes,
       });
 
+      // set selected themes to updated themes
       return updatedThemes;
     });
   };
 
   return (
     <div className='space-y-4'>
-      <Paragraph>Filter by Themes</Paragraph>
-      <div className='flex flex-wrap gap-2'>
-        {tags
-          // show only tags with at least 10 quotes
+      <Paragraph
+        onClick={() => handleAccordionState('theme')}
+        className={cn('flex gap-2 items-center justify-between')}>
+        Filter by theme
+        <FaCaretDown
+          className={cn('', accordionState.active ? 'rotate-180' : '')}
+        />
+      </Paragraph>
+
+      <motion.div
+        initial={{ height: 0 }}
+        animate={accordionState.active ? { height: 'auto' } : { height: 0 }}
+        className='flex flex-wrap gap-2 overflow-hidden'>
+        
+        {!isFetching ? tags
+          // show only tags with at least 10 quotes (don't want irrelevant tags)
           ?.filter((tag: Tag) => tag.quoteCount >= 10)
           .map((tag: Tag) => (
             <button
@@ -61,8 +76,8 @@ const FilterByTheme = ({
                 )}
               />
             </button>
-          ))}
-      </div>
+          )) : <Paragraph>Fetching theme data...</Paragraph>}
+      </motion.div>
     </div>
   );
 };
