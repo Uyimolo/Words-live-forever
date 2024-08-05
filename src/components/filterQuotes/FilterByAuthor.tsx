@@ -3,7 +3,12 @@ import { useQuery } from '@tanstack/react-query';
 import Paragraph from '../text/Paragraph';
 import { fetchData } from '@/utilities/fetchData/fetchData';
 import { useEffect, useState } from 'react';
-import { AccordionStateOption, Author, FilterOptions, FilterProps } from '@/types/type';
+import {
+  AccordionStateOption,
+  Author,
+  FilterOptions,
+  FilterProps,
+} from '@/types/type';
 import { CiCircleRemove } from 'react-icons/ci';
 import { IoSearchOutline } from 'react-icons/io5';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
@@ -11,6 +16,7 @@ import { cn } from '@/utilities/cn';
 import { IoIosAddCircleOutline } from 'react-icons/io';
 import { FaCaretDown } from 'react-icons/fa';
 import { motion } from 'framer-motion';
+import { toast } from 'react-toastify';
 
 const FilterByAuthor = ({
   setSelectedFilters,
@@ -36,19 +42,34 @@ const FilterByAuthor = ({
   };
 
   const handleAuthorListSelection = (author: string) => {
-    setAuthorList((prevList) => {
-      const newList = prevList.includes(author)
-        ? prevList.filter((item) => item !== author)
-        : [...authorList, author];
+    const isAuthorInList = authorList.includes(author);
 
-      setSelectedFilters({ ...selectedFilters, author: newList });
-
-      return newList;
-    });
+    if (isAuthorInList) {
+      // if author is already in the list kick him out quickly
+      const updatedList = authorList.filter((item) => item !== author);
+      setAuthorList(updatedList);
+      // update the selected filter list
+      setSelectedFilters({ ...selectedFilters, author: updatedList });
+    } else {
+      if (authorList.length < 4) {
+        // add author to the list
+        const updatedList = [...authorList, author];
+        console.log(updatedList);
+        setAuthorList(updatedList);
+        setSelectedFilters({ ...selectedFilters, author: updatedList });
+      } else {
+        // if four authors are already selected, show a warning (nor gree for them)
+        toast.warn('You can only select up to four authors');
+      }
+    }
   };
 
+  useEffect(() => {
+    setSearchTerm('');
+  }, [accordionState.active]);
+
   return (
-    <div className='space-y-4 max-w-3xl'>
+    <div className='space-y-4'>
       <Paragraph
         onClick={() => handleAccordionState('author')}
         className={cn('flex justify-between items-center')}>
@@ -118,14 +139,15 @@ const FilterByAuthor = ({
         <div className='relative'>
           {/* search results drop down */}
           {author?.results && author?.results.length > 0 && (
-            <div className='absolute top-0 bg-white w-full grid rounded-lg overflow-y-scroll max-h-[30vh]'>
+            <div className=' bg-white w-full grid rounded-lg overflow-y-scroll max-h-[50vh] lg:max-h-[40vh]'>
               {author?.results &&
                 author.results.map((author: Author) => (
                   <button
                     key={author._id}
                     onClick={() => handleAuthorListSelection(author.name)}
                     className={cn(
-                      'hover:bg-blue-400 hover:text-neutral-100 text-left p-1 px-3 border', authorList.includes(author.name) && 'bg-blue-400'
+                      'lg:hover:bg-gray-500 hover:text-neutral-100 text-left p-1 px-3 border',
+                      authorList.includes(author.name) && 'bg-blue-400'
                     )}>
                     {author.name}
                   </button>
