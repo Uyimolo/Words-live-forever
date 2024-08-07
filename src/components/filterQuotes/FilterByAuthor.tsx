@@ -69,7 +69,7 @@ const FilterByAuthor = ({
   }, [accordionState.active]);
 
   return (
-    <div className='space-y-4'>
+    <div className=''>
       <Paragraph
         onClick={() => handleAccordionState('author')}
         className={cn('flex justify-between items-center')}>
@@ -87,7 +87,7 @@ const FilterByAuthor = ({
         initial={{ height: 0 }}
         animate={accordionState.active ? { height: 'auto' } : { height: 0 }}>
         {/* list of selected authors */}
-        <div className='flex flex-wrap gap-1'>
+        <div className='flex flex-wrap gap-1 mt-2'>
           {authorList.map((author) => (
             <button
               key={author}
@@ -139,14 +139,14 @@ const FilterByAuthor = ({
         <div className='relative'>
           {/* search results drop down */}
           {author?.results && author?.results.length > 0 && (
-            <div className=' bg-white w-full grid rounded-lg overflow-y-scroll max-h-[50vh] lg:max-h-[40vh]'>
+            <div className=' bg-white w-full grid rounded-lg overflow-y-scroll max-h-[45vh] lg:max-h-[40vh]'>
               {author?.results &&
                 author.results.map((author: Author) => (
                   <button
                     key={author._id}
                     onClick={() => handleAuthorListSelection(author.name)}
                     className={cn(
-                      'lg:hover:bg-gray-500 hover:text-neutral-100 text-left p-1 px-3 border',
+                      'lg:hover:bg-gray-500 hover:text-neutral-100 text-sm lg:text-base text-left p-1 px-3 border',
                       authorList.includes(author.name) && 'bg-blue-400'
                     )}>
                     {author.name}

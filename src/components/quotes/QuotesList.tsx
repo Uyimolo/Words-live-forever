@@ -1,7 +1,11 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
-import { useQuery, keepPreviousData } from '@tanstack/react-query';
+import {
+  useQuery,
+  keepPreviousData,
+  useInfiniteQuery,
+} from '@tanstack/react-query';
 
 import { fetchData } from '@/utilities/fetchData/fetchData';
 
@@ -15,6 +19,7 @@ import { FaFilter } from 'react-icons/fa';
 import FilterQuotes from '../filterQuotes/FilterQuotes';
 import { cn } from '@/utilities/cn';
 import Modal from '../modal/Modal';
+import Paragraph from '../text/Paragraph';
 
 const initialFilters: FilterOptions = {
   tags: [],
@@ -23,7 +28,7 @@ const initialFilters: FilterOptions = {
 };
 
 const QuotesList = () => {
-  const [page, setPage] = useState<number>(1);
+  // const [page, setPage] = useState<number>(1);
   const [showFilters, setShowFilters] = useState<boolean>(false);
   const [filters, setFilters] = useState<FilterOptions>(initialFilters);
 
@@ -43,29 +48,67 @@ const QuotesList = () => {
     }
   };
 
-  // const queryLength = getQueryLength(length);
+  const buildUrl = (
+    page: number,
+    tags: string[],
+    author: string[],
+    length: 'none' | 'short' | 'medium' | 'long'
+  ) => {
+    // Create URL parameters based on the provided filters
+    const pageParam = `page=${page}`;
+    const tagsParam = tags.length
+      ? `&tags=${encodeURIComponent(tags.join('|'))}`
+      : '';
+    const authorParam = author.length
+      ? `&author=${encodeURIComponent(author.join('|'))}`
+      : '';
+    const lengthParam = length && getLengthParams(length);
 
-  const buildUrl = (page: number, tags: string[]) =>
-    `https://api.quotable.io/quotes?page=${page}${
-      tags.length > 0 && `&tags=${tags.join('|')}`
-    }${author.length > 0 && `&author=${author.join('|')}`}${
-      length && getLengthParams(length)
-    }&sortBy=content`;
+    // concatenating the parameters
+    const queryParam = [pageParam, tagsParam, authorParam, lengthParam]
+      .filter(Boolean)
+      .join('');
 
-  const { data: quotes, isFetching } = useQuery({
-    queryKey: ['quotes', buildUrl(page, tags)],
-    queryFn: async () => fetchData(buildUrl(page, tags)),
-    placeholderData: keepPreviousData,
+    // returning the constructed URL with all the parameters
+    return `https://api.quotable.io/quotes?${queryParam}`;
+  };
+
+  const {
+    data: quotes,
+    fetchNextPage,
+    hasNextPage,
+    isFetching,
+    isFetchingNextPage,
+    status,
+  } = useInfiniteQuery({
+    queryKey: ['quotes', buildUrl(1, tags, author, length)], // Initial page is 1
+    queryFn: async ({ pageParam = 1 }) =>
+      fetchData(buildUrl(pageParam, tags, author, length)),
+    getNextPageParam: (lastPage) => {
+      if (lastPage.page === lastPage.totalPages) return null; // No more pages to load
+      return lastPage.page + 1; // Fetch the next page
+    },
+    initialPageParam: 1,
   });
 
-  const handlePagination = useCallback((pageCount: number) => {
-    // optimistic ui update (atleast I think that is what this is doing)
-    setPage(pageCount);
+  const handleScroll = useCallback(() => {
+    const scrollTop = window.scrollY;
+    const clientHeight = document.documentElement.clientHeight;
+    const scrollHeight = document.documentElement.scrollHeight;
 
-    requestAnimationFrame(() => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-  }, []);
+    if (scrollTop + clientHeight >= scrollHeight - 100) {
+      fetchNextPage();
+    }
+  }, [fetchNextPage]);
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [handleScroll]);
+
+  const handleFilterVisibility = () => {
+    setShowFilters(true);
+  };
 
   return (
     <div
@@ -74,7 +117,7 @@ const QuotesList = () => {
       {!showFilters && (
         <button
           className='flex items-center gap-4 py-1 px-4 text-neutral-300 absolute right-0 -top-10 border border-gray-500 rounded text-sm md:top-5 lg:text-base hover:border-blue-400 hover:shadow-blue-400/20 hover:shadow-xl'
-          onClick={() => setShowFilters(true)}>
+          onClick={handleFilterVisibility}>
           Filter Quotes
           <FaFilter title='filter quotes' className='text-blue-400' />
         </button>
@@ -92,20 +135,34 @@ const QuotesList = () => {
       <HeadingOne>{`"IN THE WORDS OF THE WISE"`}</HeadingOne>
 
       <div className='grid gap-6 md:grid-cols-2 md:gap-10 lg:grid-cols-3'>
-        {isFetching ? (
+        {!quotes?.pages ? (
           <LazyQuotes />
         ) : (
-          quotes.results.map((quote: Quote) => (
-            <QuoteLink key={quote._id} quote={quote} />
-          ))
+          quotes?.pages.map((page) =>
+            page.results.map((quote: Quote) => (
+              <QuoteLink key={quote._id} quote={quote} />
+            ))
+          )
         )}
       </div>
 
-      <Pagination
-        loading={isFetching}
-        page={page}
-        handlePagination={handlePagination}
-      />
+      {quotes?.pages[0].results.length === 0 && (
+        <Paragraph className='text-center'>
+          No quotes match your current filter criteria.
+        </Paragraph>
+      )}
+
+      {isFetchingNextPage && hasNextPage && (
+        <Paragraph className='text-center text-gray-500'>
+          Loading more quotes...
+        </Paragraph>
+      )}
+
+      {!hasNextPage && (
+        <Paragraph className='text-center'>
+          You've reached the end of the available quotes.
+        </Paragraph>
+      )}
     </div>
   );
 };

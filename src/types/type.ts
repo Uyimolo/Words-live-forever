@@ -57,6 +57,7 @@ export interface PaginationProps {
   handlePagination: (pageCount: number) => void;
   page: number;
   loading: boolean;
+  totalPages: number;
 }
 
 export interface AuthorsData {

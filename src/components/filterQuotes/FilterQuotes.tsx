@@ -43,7 +43,7 @@ const FilterQuotes = ({
   };
 
   return (
-    <div className='relative flex flex-col justify-between w-[90vw] h-[90vh] overflow-hidden bg-gray-800 rounded-xl pt-16 pb-4 px-4 md:px-8 md:w-[70vw] md:h-[70vh] md:overflow-auto lg:p-10 lg:pt-14 lg:h-[90vh]'>
+    <div className='relative flex flex-col justify-between w-[90vw] overflow-scroll min-h-[450px] h-[80vh] bg-gray-800 rounded-xl pt-16 pb-4 px-4 md:px-8 md:min-w-min md:w-[70vw] md:h-[70vh] md:overflow-auto lg:p-10 lg:pt-14 lg:h-[90vh]'>
       <div className=' space-y-4'>
         <IoIosAddCircleOutline
           className='cursor-pointer absolute top-4 right-4 text-3xl text-gray-300 rotate-45 lg:right-10 lg:top-8'
