@@ -64,7 +64,7 @@ const SearchResults = ({
 
   useEffect(() => {
     // toggles body scroll based on the presence of search results
-    if (results?.pages[0].results) {
+    if (results?.pages[0].results.length) {
       document.body.style.overflow = 'hidden'; // disable scroll
     } else {
       document.body.style.overflow = 'auto'; // enable scroll
