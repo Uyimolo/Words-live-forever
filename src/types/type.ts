@@ -82,17 +82,15 @@ export interface Author {
 }
 
 export interface SearchProps {
-  setResults: (results: Quote[] | null) => void;
-  results: Quote[] | null;
   setSearchTerm: (term: string) => void;
   searchTerm: string;
+  isSearching: boolean;
 }
 
 export interface SearchResultsProps {
-  results: Quote[] | null;
   searchTerm: string;
   setSearchTerm: (term: string) => void;
-  setResults: (results: Quote[] | null) => void;
+  setIsSearching: (isSearching: boolean) => void;
 }
 
 export interface FilterOptions {
