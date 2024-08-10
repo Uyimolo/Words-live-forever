@@ -181,7 +181,7 @@ const QuotesList = () => {
       {/* Display message when there are no more quotes available */}
       {!hasNextPage && (
         <Paragraph className='text-center'>
-          You've reached the end of the available quotes.
+          {`You've reached the end of the available quotes.`}
         </Paragraph>
       )}
     </div>

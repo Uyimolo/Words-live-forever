@@ -75,7 +75,7 @@ const SearchResults = ({
     <div
       className={cn(
         'w-full bg-black/80 backdrop-blur-sm fixed left-0 top-32 h-screen px-4 overflow-y-auto z-10 md:top-20 md:px-8 lg:px-12',
-        !results?.pages[0]?.results?.length && searchTerm && 'h-12 absolute',
+        !results?.pages[0]?.results?.length && searchTerm && 'h-0',
         searchTerm.length ? 'block' : 'hidden'
       )}>
       {/* display searched results. */}
@@ -110,7 +110,7 @@ const SearchResults = ({
         {/* Display message when there are no more quotes available */}
         {!hasNextPage && (
           <Paragraph className='text-center pb-8'>
-            You've reached the end of the available quotes.
+            {`You've reached the end of the available quotes.`}
           </Paragraph>
         )}
       </div>

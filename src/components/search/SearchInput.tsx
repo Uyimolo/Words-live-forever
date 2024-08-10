@@ -41,7 +41,7 @@ const SearchInput = ({
     if (showSearchInput) {
       searchInputRef.current && searchInputRef.current.focus();
     }
-  }, []);
+  }, [showSearchInput]);
 
   return (
     <div
