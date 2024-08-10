@@ -1,35 +1,30 @@
 'use client';
-import { cn } from '@/utilities/cn';
 import Image from 'next/image';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import logo from '@/assets/logo.png';
-import Search from '../search/Search';
-import { Quote } from '@/types/type';
-import { useEffect, useState } from 'react';
+import SearchInput from '../search/SearchInput';
+import { useState } from 'react';
 import SearchResults from '../search/SearchResults';
+import NavigationMenu from './NavigationMenu';
 
-const navItems = [
-  { label: 'Home', href: '/' },
-  { label: 'Quotes', href: '/quotes' },
-  { label: 'Authors', href: '/authors' },
-];
+/*
+ * Header component that includes a navigation menu, a search input and search results
+
+ * States:
+ * - SearchTerm : (string) value of the search input
+ * - isSearching : (boolean) true if search is in progress
+ *
+ * Features:
+ * - Provides navigation links for different pages.
+ * - Integrates a search input that triggers search results.
+ */
 
 export default function Header() {
-  const [results, setResults] = useState<Quote[] | null>(null);
   const [searchTerm, setSearchTerm] = useState<string>('');
-  const pathName = usePathname();
-
-  useEffect(() => {
-    if (results && results?.length >= 1) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'auto';
-    }
-  }, [results, searchTerm]);
+  const [isSearching, setIsSearching] = useState<boolean>(false);
 
   return (
     <header className='relative flex justify-between py-2 items-center px-4 md:gap-10 md:px-8 lg:px-12'>
+      {/* Logo */}
       <Image
         src={logo}
         alt='Words live forever'
@@ -38,32 +33,19 @@ export default function Header() {
         className='w-16 lg:w-24'
       />
 
-      <Search
-        results={results}
-        setResults={setResults}
+      <SearchInput
         setSearchTerm={setSearchTerm}
         searchTerm={searchTerm}
+        isSearching={isSearching}
       />
 
-      <nav className='flex  gap-4 lg:gap-4 '>
-        {navItems.map((item, index) => (
-          <Link
-            key={index}
-            className={cn(
-              ' text-sm text-neutral-500 lg:text-base hover:text-neutral-300',
-              pathName === item.href ? 'text-neutral-100' : ''
-            )}
-            href={item.href}>
-            {item.label}
-          </Link>
-        ))}
-      </nav>
-      {results && (
+      <NavigationMenu />
+
+      {searchTerm && (
         <SearchResults
           setSearchTerm={setSearchTerm}
-          setResults={setResults}
-          results={results}
           searchTerm={searchTerm}
+          setIsSearching={setIsSearching}
         />
       )}
     </header>

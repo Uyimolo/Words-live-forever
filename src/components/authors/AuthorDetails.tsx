@@ -3,7 +3,7 @@ import React, { Suspense } from 'react';
 import ViewAuthor from './ViewAuthor';
 import ScrollToTop from '@/utilities/ScrollToTop';
 import RelatedQuotes from '../quotes/RelatedQuotes';
-import LazyQuotes from '../quotes/LazyQuotes';
+import LazyQuotes from '../quotes/SkeletonQuotes';
 
 const AuthorDetails = ({ author }: { author: Author }) => {
   const { name } = author;
@@ -22,7 +22,7 @@ const AuthorDetails = ({ author }: { author: Author }) => {
       <ViewAuthor author={author} />
 
       <Suspense fallback={lazyQuotesContainer}>
-        <RelatedQuotes name={name} />
+        <RelatedQuotes authorName={name} />
       </Suspense>
     </div>
   );

@@ -40,7 +40,7 @@ const FilterByTheme = ({
   };
 
   return (
-    <div className='space-y-4'>
+    <div className=''>
       <Paragraph
         onClick={() => handleAccordionState('theme')}
         className={cn('flex gap-2 items-center justify-between')}>
@@ -53,30 +53,36 @@ const FilterByTheme = ({
       <motion.div
         initial={{ height: 0 }}
         animate={accordionState.active ? { height: 'auto' } : { height: 0 }}
-        className='flex flex-wrap gap-2 overflow-hidden'>
-        
-        {!isFetching ? tags
-          // show only tags with at least 10 quotes (don't want irrelevant tags)
-          ?.filter((tag: Tag) => tag.quoteCount >= 10)
-          .map((tag: Tag) => (
-            <button
-              key={tag._id}
-              className={cn(
-                'flex gap-2 items-center py-1 px-2 rounded-full border border-gray-500',
-                selectedThemes.includes(tag.name) ? 'border-blue-400' : ''
-              )}
-              onClick={() => handleThemeSelection(tag.name)}>
-              <Paragraph>{tag.name}</Paragraph>
-              <IoIosAddCircleOutline
+        className={cn(
+          'flex flex-wrap gap-2 overflow-hidden',
+          accordionState.active && 'mt-2'
+        )}>
+        {!isFetching ? (
+          tags
+            // show only tags with at least 10 quotes (don't want irrelevant tags)
+            ?.filter((tag: Tag) => tag.quoteCount >= 10)
+            .map((tag: Tag) => (
+              <button
+                key={tag._id}
                 className={cn(
-                  'text-neutral-300 text-xl',
-                  selectedThemes.includes(tag.name)
-                    ? 'rotate-45 text-red-300'
-                    : ''
+                  'flex gap-2 items-center py-1 px-2 rounded-full border border-gray-500',
+                  selectedThemes.includes(tag.name) ? 'border-blue-400' : ''
                 )}
-              />
-            </button>
-          )) : <Paragraph>Fetching theme data...</Paragraph>}
+                onClick={() => handleThemeSelection(tag.name)}>
+                <Paragraph>{tag.name}</Paragraph>
+                <IoIosAddCircleOutline
+                  className={cn(
+                    'text-neutral-300 text-xl',
+                    selectedThemes.includes(tag.name)
+                      ? 'rotate-45 text-red-300'
+                      : ''
+                  )}
+                />
+              </button>
+            ))
+        ) : (
+          <Paragraph>Fetching theme data...</Paragraph>
+        )}
       </motion.div>
     </div>
   );

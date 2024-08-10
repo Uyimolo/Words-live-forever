@@ -1,30 +1,32 @@
 import { Suspense } from 'react';
-// types
 import { Quote } from '@/types/type';
-// components
-import LazyQuotes from './LazyQuotes';
+import SkeletonQuotes from './SkeletonQuotes';
 import RelatedQuotes from './RelatedQuotes';
-// utilities
 import ScrollToTop from '@/utilities/ScrollToTop';
 import ViewQuote from './ViewQuote';
+
+// This component shows details of a quote and related quotes (based on relevant quote tags)
 
 const QuoteDetails = async ({ quote }: { quote: Quote }) => {
   const { author, content, tags } = quote;
 
-  // didn't want lazyQuotes to clutter the suspense container so i defined it up here
-  const lazyQuotesContainer = (
+  // didn't want SkeletonQuotes to clutter the suspense container so i defined it up here
+  const skeletonQuotesContainer = (
     <div className='grid gap-6 md:grid-cols-2 md:gap-10 lg:grid-cols-3'>
-      <LazyQuotes />
+      <SkeletonQuotes />
     </div>
   );
 
   return (
     <div className='w-full grid min-h-full gap-20'>
+      {/* scroll to top when ever a new quote is shown */}
       <ScrollToTop />
 
+      {/* display quote */}
       <ViewQuote author={author} tags={tags} content={content} />
 
-      <Suspense fallback={lazyQuotesContainer}>
+      {/* Stream related quotes */}
+      <Suspense fallback={skeletonQuotesContainer}>
         <RelatedQuotes tags={tags} />
       </Suspense>
     </div>

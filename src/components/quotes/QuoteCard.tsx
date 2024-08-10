@@ -7,19 +7,17 @@ import CopyToClipBoard from '../CopyToClipBoard/CopyToClipBoard';
 import AddToFavorites from '../like-favourite/AddToFavorites';
 import Share from '../share/Share';
 
-const QuoteLink = ({
+const QuoteCard = ({
   quote,
   onClick,
 }: {
   quote: Quote;
-  onClick?: MouseEventHandler<HTMLDivElement>;
+  onClick?: MouseEventHandler<HTMLAnchorElement>;
 }) => {
   const { _id, content, author, tags } = quote;
 
   return (
-    <div
-      onClick={onClick}
-      className='flex flex-col justify-between border border-gray-500 rounded bg-gray-900 min-w-full px-4 py-4 space-y-4 hover:border-blue-400 hover:shadow-2xl focus:shadow-2xl focus:shadow-blue-400/30 hover:shadow-blue-400/30 focus:border-blue-400 focus:outline-blue-400'>
+    <div className='flex flex-col justify-between border border-gray-500 rounded bg-gray-900 min-w-full px-4 py-4 space-y-4 hover:border-blue-400 hover:shadow-2xl focus:shadow-2xl focus:shadow-blue-400/30 hover:shadow-blue-400/30 focus:border-blue-400 focus:outline-blue-400'>
       <div className='space-y-4'>
         <Paragraph className='text-blue-400'>{tags.join(' | ')}</Paragraph>
         <Paragraph className='self-start'>{`"${content}"`}</Paragraph>
@@ -35,7 +33,7 @@ const QuoteLink = ({
 
         <CopyToClipBoard text={`"${content}" -${author}`} />
 
-        <Link href={`/quotes/${_id}`}>
+        <Link href={`/quotes/${_id}`} onClick={onClick}>
           <FaEye className='text-white text-xl hover:text-blue-400' />
         </Link>
 
@@ -45,6 +43,6 @@ const QuoteLink = ({
   );
 };
 
-export default QuoteLink;
+export default QuoteCard;
 
 `"'All conditioned things are impermanent' — when one sees this with wisdom, one turns away from suffering." -The Buddha`;
