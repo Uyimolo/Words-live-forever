@@ -116,7 +116,7 @@ const SearchResults = ({
       </Paragraph>
 
       {/* Display searched results in a grid layout */}
-      <div className='mt-10 pr-2'>
+      <div className='mt-16 pr-2 lg:mt-10'>
         <div className='grid gap-6 md:grid-cols-2 md:gap-10 lg:grid-cols-3'>
           {results?.pages[0]?.results?.length > 0 &&
             results?.pages.map((page) =>

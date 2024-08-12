@@ -14,7 +14,7 @@ const QuoteCard = ({
   quote: Quote;
   onClick?: MouseEventHandler<HTMLAnchorElement>;
 }) => {
-  const { _id, content, author, tags } = quote;
+  const { _id, content, author, tags, authorSlug } = quote;
 
   return (
     <div className='flex flex-col justify-between border border-gray-500 rounded bg-gray-900 min-w-full px-4 py-4 space-y-4 hover:border-blue-400 hover:shadow-2xl focus:shadow-2xl focus:shadow-blue-400/30 hover:shadow-blue-400/30 focus:border-blue-400 focus:outline-blue-400'>
@@ -23,9 +23,9 @@ const QuoteCard = ({
         <Paragraph className='self-start'>{`"${content}"`}</Paragraph>
       </div>
 
-      <Paragraph className='text-right w-fit border-b border-neutral-600 pb-1 self-end justify-self-end'>
+      <Link href={`/authors/${authorSlug}`} className='text-right w-fit border-b border-neutral-600 pb-1 self-end justify-self-end text-neutral-300 text-sm lg:text-base'>
         - {author}
-      </Paragraph>
+      </Link>
 
       {/* share, add to collection etc (template) */}
       <div className='flex gap-4'>

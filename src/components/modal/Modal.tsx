@@ -40,7 +40,7 @@ const Modal = ({
         }
       }}>
       <div
-        className='w-fit rounded-xl bg-white'
+        className='w-fit h-fit'
         // prevent closing the modal when modal content is clicked
         onClick={(event) => event.stopPropagation()}>
         {children}
