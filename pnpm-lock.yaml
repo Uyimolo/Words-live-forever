@@ -60,6 +60,9 @@ importers:
       postcss:
         specifier: ^8
         version: 8.4.40
+      tailwind-scrollbar:
+        specifier: ^3.1.0
+        version: 3.1.0(tailwindcss@3.4.6)
       tailwindcss:
         specifier: ^3.4.1
         version: 3.4.6
@@ -1596,6 +1599,12 @@ packages:
 
   tailwind-merge@2.4.0:
     resolution: {integrity: sha512-49AwoOQNKdqKPd9CViyH5wJoSKsCDjUlzL8DxuGp3P1FsGY36NJDAa18jLZcaHAUUuTj+JB8IAo8zWgBNvBF7A==}
+
+  tailwind-scrollbar@3.1.0:
+    resolution: {integrity: sha512-pmrtDIZeHyu2idTejfV59SbaJyvp1VRjYxAjZBH0jnyrPRo6HL1kD5Glz8VPagasqr6oAx6M05+Tuw429Z8jxg==}
+    engines: {node: '>=12.13.0'}
+    peerDependencies:
+      tailwindcss: 3.x
 
   tailwindcss@3.4.6:
     resolution: {integrity: sha512-1uRHzPB+Vzu57ocybfZ4jh5Q3SdlH7XW23J5sQoM9LhE9eIOlzxer/3XPSsycvih3rboRsvt0QCmzSrqyOYUIA==}
@@ -3435,6 +3444,10 @@ snapshots:
   swiper@11.1.7: {}
 
   tailwind-merge@2.4.0: {}
+
+  tailwind-scrollbar@3.1.0(tailwindcss@3.4.6):
+    dependencies:
+      tailwindcss: 3.4.6
 
   tailwindcss@3.4.6:
     dependencies:
