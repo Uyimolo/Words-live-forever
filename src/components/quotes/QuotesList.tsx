@@ -53,7 +53,7 @@ const QuotesList = () => {
   };
 
   // Construct the URL for fetching quotes with pagination and filtering parameters
-  const buildUrl = (
+  const generateUrl = (
     page: number,
     tags: string[],
     author: string[],
@@ -84,10 +84,10 @@ const QuotesList = () => {
     isFetchingNextPage,
     isError,
   } = useInfiniteQuery({
-    queryKey: ['quotes', buildUrl(1, tags, author, length)],
+    queryKey: ['quotes', generateUrl(1, tags, author, length)],
 
     queryFn: async ({ pageParam = 1 }) =>
-      fetchData(buildUrl(pageParam, tags, author, length)),
+      fetchData(generateUrl(pageParam, tags, author, length)),
 
     getNextPageParam: (lastPage) => {
       if (lastPage.page === lastPage.totalPages) return null;

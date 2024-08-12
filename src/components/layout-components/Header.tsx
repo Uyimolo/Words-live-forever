@@ -41,13 +41,11 @@ export default function Header() {
 
       <NavigationMenu />
 
-      {searchTerm && (
-        <SearchResults
-          setSearchTerm={setSearchTerm}
-          searchTerm={searchTerm}
-          setIsSearching={setIsSearching}
-        />
-      )}
+      <SearchResults
+        setSearchTerm={setSearchTerm}
+        searchTerm={searchTerm}
+        setIsSearching={setIsSearching}
+      />
     </header>
   );
 }
